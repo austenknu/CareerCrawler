@@ -1,0 +1,119 @@
+# Configuration for the Job Scraper Bot
+# Rename this file to config.yaml and fill in your details.
+
+# --- Scraping Configuration ---
+scraping:
+  # Time for the daily crawl (e.g., "02:00" for 2 AM). Uses system's timezone.
+  schedule_time: "02:00"
+
+  # List of companies to scrape.
+  # Add company name and the exact URL of their careers/job search page.
+  # Example:
+  # companies:
+  #   - name: "Example Inc."
+  #     url: "https://careers.example.com/jobs"
+  #   - name: "Tech Corp"
+  #     url: "https://jobs.techcorp.com/search"
+  companies:
+    - name: "Placeholder Company 1"
+      url: "https://example.com/careers"
+    - name: "Placeholder Company 2"
+      url: "https://jobs.example.org/all"
+
+  # User agent string to use for requests.
+  user_agent: "Mozilla/5.0 (compatible; CareerCrawler/1.0; +https://github.com/AnonArchitect/JobScraperAgent)"
+
+  # Delay between requests to the same domain (in seconds).
+  request_delay_seconds: 3
+
+  # Maximum number of retries for failed requests.
+  max_retries: 3
+
+  # How far back to look for jobs (e.g., "24 hours", "7 days"). Case-insensitive.
+  # The scraper will try to find posting dates. If unavailable, it compares against known jobs.
+  time_frame: "7 days"
+
+# --- Job Preferences ---
+preferences:
+  # List of job titles or keywords to include (case-insensitive).
+  # Examples: ["Software Engineer", "Developer", "Data Scientist"]
+  titles:
+    - "Software Engineer"
+    - "Full Stack Developer"
+    - "Backend Engineer"
+
+  # List of seniority levels to include (case-insensitive). Use "any" to disable.
+  # Examples: ["Senior", "Mid-level"], or ["any"]
+  seniority:
+    - "any"
+
+  # List of departments to include (case-insensitive). Use "any" to disable.
+  # Examples: ["Engineering", "Product"], or ["any"]
+  department:
+    - "any"
+
+  # Location preferences (case-insensitive).
+  # - List specific locations to include: ["San Francisco, CA", "Remote (USA)"]
+  # - To exclude locations, prefix with "exclude:": ["exclude: Europe", "exclude: India"]
+  # - Use "any" to disable location filtering.
+  location:
+    - "any"
+    # - "Remote"
+    # - "exclude: London"
+
+  # List of keywords to exclude from job titles or descriptions (case-insensitive).
+  # Examples: ["intern", "contract", "sales"]
+  exclusions:
+    - "intern"
+    - "contractor"
+    - "sales"
+    - "marketing"
+
+# --- Data Storage ---
+storage:
+  # Storage type: "sqlite" (recommended) or "txt".
+  type: "sqlite"
+
+  # File path for the database or text file.
+  # Will be created relative to the project root if it doesn't exist.
+  path: "jobs.db" # or "jobs.txt"
+
+# --- Discord Bot ---
+discord:
+  # Enable or disable the Discord bot.
+  enabled: true
+
+  # Your Discord Bot Token (KEEP THIS SECRET - consider environment variables for production).
+  # Get this from the Discord Developer Portal.
+  token: "YOUR_DISCORD_BOT_TOKEN" # Replace with your actual token
+
+  # The Channel ID or User ID where the bot should send alerts.
+  # Enable Developer Mode in Discord, right-click channel/user -> Copy ID.
+  channel_id: "YOUR_DISCORD_CHANNEL_OR_USER_ID" # Replace with your ID
+
+  # Maximum number of alerts to send per crawl cycle to avoid spam.
+  max_alerts_per_run: 10
+
+# --- Web Dashboard ---
+dashboard:
+  # Enable or disable the web dashboard.
+  enabled: true
+
+  # Host for the local dashboard.
+  host: "127.0.0.1"
+
+  # Port for the local dashboard.
+  port: 5000
+
+  # Basic authentication (optional, leave blank to disable)
+  # For local use, security isn't paramount, but you can add a simple layer.
+  username: ""
+  password: ""
+
+# --- Logging ---
+logging:
+  # File to write logs to.
+  log_file: "scraper.log"
+
+  # Logging level: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  log_level: "INFO" 

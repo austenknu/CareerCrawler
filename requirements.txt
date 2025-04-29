@@ -1,0 +1,33 @@
+# Basic dependencies - add more specific ones as needed
+
+# Core
+requests>=2.28.0
+beautifulsoup4>=4.11.0
+PyYAML>=6.0
+
+# Scheduling
+apscheduler>=3.9.0
+pytz>=2022.1 # Required by APScheduler for timezone handling
+
+# Discord Bot
+discord.py>=2.0.0
+
+# Web Dashboard
+Flask>=2.2.0
+click>=8.0.0 # CLI framework
+
+# Database (Optional - only if using SQLite)
+SQLAlchemy>=1.4.0
+alembic>=1.8.0 # For migrations if needed
+
+# Scraping (Alternative - if using Scrapy)
+# scrapy>=2.6.0
+
+# Add other libraries like playwright if needed for JS-heavy sites
+# playwright>=1.25.0
+
+# Linters/Formatters (for development)
+# black>=22.8.0
+# isort>=5.10.0
+# flake8>=5.0.0
+# mypy>=0.971 

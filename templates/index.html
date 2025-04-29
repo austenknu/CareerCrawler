@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Career Crawler Dashboard</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; padding: 20px; max-width: 1200px; margin: auto; background-color: #f4f4f4; color: #333; }
+        h1, h2 { color: #333; border-bottom: 1px solid #ccc; padding-bottom: 10px;}
+        .job-list { list-style: none; padding: 0; }
+        .job-item {
+            background: #fff;
+            margin-bottom: 15px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .job-item h3 { margin-top: 0; color: #0056b3; }
+        .job-item p { margin: 5px 0; }
+        .job-item .meta { font-size: 0.9em; color: #666; }
+        .job-item .actions form { display: inline-block; margin-right: 10px; }
+        .job-item .actions button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+        .job-item .actions .apply-btn { background-color: #28a745; color: white; }
+        .job-item .actions .ignore-btn { background-color: #ffc107; color: #333; }
+        .job-item .actions .unapply-btn, .job-item .actions .unignore-btn {
+             background-color: #6c757d; color: white;
+        }
+        .job-item .applied-tag { color: #28a745; font-weight: bold; }
+        .job-item .ignored-tag { color: #dc3545; font-weight: bold; }
+        .job-item a { color: #0056b3; text-decoration: none; }
+        .job-item a:hover { text-decoration: underline; }
+        .filters { margin-bottom: 20px; padding: 10px; background: #eee; border-radius: 5px; }
+        .filters a { margin-right: 15px; text-decoration: none; color: #0056b3; }
+        .filters a.active { font-weight: bold; text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>Career Crawler Dashboard</h1>
+
+    <div class="filters">
+        View:
+        <a href="/?view=active" class="{{ 'active' if current_view == 'active' else '' }}">Active Jobs</a> |
+        <a href="/?view=applied" class="{{ 'active' if current_view == 'applied' else '' }}">Applied Jobs</a> |
+        <a href="/?view=ignored" class="{{ 'active' if current_view == 'ignored' else '' }}">Ignored Jobs</a>
+    </div>
+
+    <h2>{{ title }} ({{ jobs|length }})</h2>
+
+    {% if jobs %}
+    <ul class="job-list">
+        {% for job in jobs %}
+        <li class="job-item">
+            <h3><a href="{{ job.url }}" target="_blank">{{ job.title }}</a></h3>
+            <p><strong>Company:</strong> {{ job.company }}</p>
+            <p><strong>Location:</strong> {{ job.location or 'N/A' }}</p>
+            <p class="meta">
+                Scraped: {{ job.scraped_date.strftime('%Y-%m-%d %H:%M') }} UTC
+                {% if job.posted_date %}
+                | Posted: {{ job.posted_date.strftime('%Y-%m-%d') }} UTC
+                {% endif %}
+                {% if job.is_applied %}
+                | <span class="applied-tag">Applied</span>
+                {% elif job.is_ignored %}
+                | <span class="ignored-tag">Ignored</span>
+                {% endif %}
+            </p>
+            {% if job.description and job.description not in ["(Description Unavailable)", "(No Title Text)"] %}
+                <p><strong>Description Snippet:</strong> {{ job.description | truncate(200) }}</p>
+            {% endif %}
+            <div class="actions">
+                {% if not job.is_applied %}
+                <form action="/job/{{ job.id }}/apply" method="post">
+                    <input type="hidden" name="current_view" value="{{ current_view }}">
+                    <button type="submit" class="apply-btn">Mark Applied</button>
+                </form>
+                {% else %}
+                 <form action="/job/{{ job.id }}/unapply" method="post">
+                     <input type="hidden" name="current_view" value="{{ current_view }}">
+                    <button type="submit" class="unapply-btn">Mark Un-Applied</button>
+                </form>
+                {% endif %}
+
+                {% if not job.is_ignored %}
+                <form action="/job/{{ job.id }}/ignore" method="post">
+                     <input type="hidden" name="current_view" value="{{ current_view }}">
+                    <button type="submit" class="ignore-btn">Ignore</button>
+                </form>
+                {% else %}
+                <form action="/job/{{ job.id }}/unignore" method="post">
+                     <input type="hidden" name="current_view" value="{{ current_view }}">
+                    <button type="submit" class="unignore-btn">Un-Ignore</button>
+                </form>
+                {% endif %}
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No jobs found matching this criteria.</p>
+    {% endif %}
+
+</body>
+</html> 
