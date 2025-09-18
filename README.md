@@ -18,8 +18,8 @@ local web dashboard.
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/austenknu/JobScraperAgent.git
-    cd JobScraperAgent
+    git clone https://github.com/austenknu/CareerCrawler.git
+    cd CareerCrawler
     ```
 
 2.  **Create a virtual environment:**
