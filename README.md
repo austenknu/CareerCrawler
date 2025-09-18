@@ -1,4 +1,4 @@
-# Career Crawler
+# Career Crawler Framework
 
 Mutli-agent system for scraping job postings from company career pages,
 filtering them based on user preferences, and delivering alerts via Discord and a
