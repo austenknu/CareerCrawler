@@ -1,6 +1,6 @@
 # Career Crawler
 
-This project provides a framework for scraping job postings from company career pages,
+Mutli-agent system for scraping job postings from company career pages,
 filtering them based on user preferences, and delivering alerts via Discord and a
 local web dashboard.
 
@@ -18,7 +18,7 @@ local web dashboard.
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/AnonArchitect/JobScraperAgent.git
+    git clone https://github.com/austenknu/JobScraperAgent.git
     cd JobScraperAgent
     ```
 
